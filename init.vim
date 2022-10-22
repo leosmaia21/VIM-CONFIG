@@ -310,7 +310,14 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-explorer', 'coc-json', 'coc-pyright', 'coc-pairs']
+let g:coc_global_extensions = ['coc-json', 
+			\'coc-clangd', 
+			\'coc-explorer', 
+			\'coc-json', 
+			\'coc-pyright', 
+			\'coc-pairs',
+			\'coc-vimlsp'
+			\]
 
 let g:coc_user_config ={
 	\'diagnostic.virtualText': v:true,
@@ -326,5 +333,10 @@ let g:coc_user_config ={
 	\'explorer.previewAction.onHover': v:false,
 	\'explorer.position': 'left',
 	\'coc.preferences.extensionUpdateCheck': 'daily',
-	\'flutter.provider.enableSnippet' : v:true
+	\'flutter.provider.enableSnippet' : v:true,
+	\'flutter.enabled' : v:true
 	\}
+let g:markdown_fenced_languages = [
+      \ 'vim',
+      \ 'help'
+      \]
