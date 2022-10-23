@@ -73,6 +73,17 @@ set mouse=a
 
 let mapleader = " "
 
+set foldmethod=syntax
+set foldnestmax=1
+" set nofoldenable
+" set foldclose=all
+" set foldopen=all
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave *.* mkview
+  autocmd BufWinEnter *.* silent! loadview
+augroup END
+
 "Float terminal configs
 let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_prev   = '<F8>'
@@ -310,7 +321,8 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-let g:coc_global_extensions = ['coc-json', 
+let g:coc_global_extensions = [
+			\'coc-json', 
 			\'coc-clangd', 
 			\'coc-explorer', 
 			\'coc-json', 
