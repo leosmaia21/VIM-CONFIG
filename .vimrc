@@ -47,12 +47,14 @@ Plug '907th/vim-auto-save'
 " Plug 'kshenoy/vim-signature'
 
 " Python
-Plug 'jpalardy/vim-slime', { 'for': 'python' }
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+
 call plug#end()
 
 let g:coc_default_semantic_highlight_groups = 1
 
+
+filetype plugin indent on
 syntax on
 set rnu
 set number
@@ -73,6 +75,23 @@ set mouse=a
 
 let mapleader = " "
 
+" set viewdir=$HOME/.vim_view//
+set foldmethod=syntax
+" set foldnestmax=10
+set foldlevel=99
+" set nofoldenable
+" set foldclose=all
+" set foldopen=all
+
+filetype on
+autocmd Syntax html,python,tex setlocal foldmethod=indent
+
+" augroup remember
+"   autocmd!
+"   autocmd BufWinLeave *.* mkview
+"   autocmd BufWinEnter *.* silent! loadview
+" augroup END
+
 "Float terminal configs
 let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_prev   = '<F8>'
@@ -83,7 +102,6 @@ let g:floaterm_height = 1.0
 let g:bufferline_show_bufnr = 0
 
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-
 
 nnoremap <silent> <leader>m :delmark!<CR>
 
@@ -137,7 +155,6 @@ set ttimeoutlen=1
 set ttyfast
 
 
-filetype plugin on
 set encoding=utf-8
 
 nnoremap <leader>t :below new output:///flutter-dev <CR>
@@ -310,13 +327,15 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-let g:coc_global_extensions = ['coc-json', 
+let g:coc_global_extensions = [
+			\'coc-json', 
 			\'coc-clangd', 
 			\'coc-explorer', 
 			\'coc-json', 
-			\'coc-pyright', 
+			\'coc-pyright',
 			\'coc-pairs',
-			\'coc-vimlsp'
+			\'coc-vimlsp',
+			\'coc-flutter'
 			\]
 
 let g:coc_user_config ={
@@ -334,9 +353,10 @@ let g:coc_user_config ={
 	\'explorer.position': 'left',
 	\'coc.preferences.extensionUpdateCheck': 'daily',
 	\'flutter.provider.enableSnippet' : v:true,
-	\'flutter.enabled' : v:true
+	\'flutter.enabled' : v:true,
 	\}
 let g:markdown_fenced_languages = [
       \ 'vim',
       \ 'help'
       \]
+	" \'python.pythonPath':'/home/leonardo/Desktop/path.sh'
