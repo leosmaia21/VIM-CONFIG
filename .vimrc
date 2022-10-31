@@ -44,10 +44,13 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'nvim-lua/plenary.nvim'
 Plug '907th/vim-auto-save'
+Plug 'pseewald/vim-anyfold'
+
 " Plug 'kshenoy/vim-signature'
 
 " Python
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+" Plug 'numirias/semshi'
 
 call plug#end()
 
@@ -76,21 +79,26 @@ set mouse=a
 let mapleader = " "
 
 " set viewdir=$HOME/.vim_view//
-set foldmethod=syntax
+" set foldmethod=syntax
 " set foldnestmax=10
-set foldlevel=99
+" set foldlevel=99
 " set nofoldenable
 " set foldclose=all
 " set foldopen=all
 
-filetype on
-autocmd Syntax html,python,tex setlocal foldmethod=indent
+" fold mas com o plugin
+filetype plugin indent on " required
+syntax on                 " required
+autocmd Filetype * AnyFoldActivate               " activate for all filetypes
+set foldlevel=0  " close all folds
+set foldlevel=99 " Open all folds
 
-" augroup remember
-"   autocmd!
-"   autocmd BufWinLeave *.* mkview
-"   autocmd BufWinEnter *.* silent! loadview
-" augroup END
+
+augroup remember
+  autocmd!
+  autocmd BufWinLeave *.* mkview
+  autocmd BufWinEnter *.* silent! loadview
+augroup END
 
 "Float terminal configs
 let g:floaterm_keymap_new    = '<F7>'
@@ -341,7 +349,9 @@ let g:coc_global_extensions = [
 let g:coc_user_config ={
 	\'diagnostic.virtualText': v:true,
 	\'diagnostic.virtualTextCurrentLineOnly': v:false,
+	\'coc.preferences.colorSupport': v:true,
 	\'semanticTokens.enable': v:true,
+	\'coc.preferences.semanticTokensHighlights':v:true,
 	\'explorer.git.enable':v:true, 
 	\'explorer.buffer.root.template': '[icon & 1] OPEN EDITORS',
 	\'explorer.file.root.template': '[icon & 1] PROJECT ([root])',
