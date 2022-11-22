@@ -1,4 +1,4 @@
-" Run PlugInstall if there are missing plugins
+Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
@@ -18,7 +18,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'vim-airline/vim-airline-themes'
- 
+
 " Snippets
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
@@ -50,18 +50,30 @@ Plug 'vim-airline/vim-airline'
 Plug 'nvim-lua/plenary.nvim'
 Plug '907th/vim-auto-save'
 Plug 'pseewald/vim-anyfold'
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 
 " Plug 'kshenoy/vim-signature'
 
 " Python
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
-" Plug 'numirias/semshi'
-
+"42
+Plug '42Paris/42header'
+Plug 'vim-syntastic/syntastic'
+Plug 'alexandregv/norminette-vim'
+ " Plug 'numirias/semshi'
 call plug#end()
+
+let g:user42 = 'ledos-sa'
+let g:mail42 = 'ledos-sa@student.42.fr'
 
 let g:coc_default_semantic_highlight_groups = 1
 
+set clipboard+=unnamedplus
 
+nnoremap <C-y> "+y
+vnoremap <C-y> "+y
+nnoremap <C-p> "+gP
+vnoremap <C-p> "+gP
 filetype plugin indent on
 syntax on
 set rnu
@@ -80,6 +92,7 @@ set smartindent
 set ignorecase
 set hidden
 set mouse=a
+set mousemodel=extend
 
 let mapleader = " "
 
@@ -143,7 +156,10 @@ let g:airline_theme = 'gruvbox'
 "set clipboard=unnamedplus
 
 "Open explorer, is like nerdtree but betther
-nmap <space>e <Cmd>CocCommand explorer<CR>
+nmap <space>e <Cmd>CocCommand explorer <CR>
+" autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+" CocAction('runCommand', 'explorer.getNodeInfo', 'closest') is v:null
+"
 
 " refresh do coc explorer sempre que é gravado um ficheiro para atualizar os
 " erros nos outros ficheiros
@@ -152,13 +168,13 @@ autocmd BufWritePost * call CocAction('runCommand', 'explorer.doAction', 'closes
 "     \ call CocAction('runCommand', 'explorer.doAction', 'closest', ['refresh'])
 
 " Refresh nerdtree whenever is open
-nnoremap <C-n> :call NERDTreeToggleAndRefresh()<CR>
-function NERDTreeToggleAndRefresh()
-:NERDTreeToggle
-if g:NERDTree.IsOpen()
-:NERDTreeRefreshRoot
-endif
-endfunction
+" nnoremap <C-n> :call NERDTreeToggleAndRefresh()<CR>
+" function NERDTreeToggleAndRefresh()
+" :NERDTreeToggle
+" if g:NERDTree.IsOpen()
+" :NERDTreeRefreshRoot
+" endif
+" endfunction
 
 " Configuracao para aparecer a linha em insert mode e o bloco em normal mode
 let &t_SI = "\e[5 q"
@@ -345,7 +361,7 @@ let g:coc_global_extensions = [
 			\'coc-clangd', 
 			\'coc-explorer', 
 			\'coc-json', 
-			\'coc-pyright',
+			\'coc-jedi',
 			\'coc-pairs',
 			\'coc-vimlsp',
 			\'coc-flutter'
@@ -374,4 +390,81 @@ let g:markdown_fenced_languages = [
       \ 'vim',
       \ 'help'
       \]
-	" \'python.pythonPath':'/home/leonardo/Desktop/path.sh'
+
+" let g:coc_explorer_global_presets = {
+" \   '.vim': {
+" \     'root-uri': '~/.vim',
+" \   },
+" \   'tab': {
+" \     'position': 'tab',
+" \     'quit-on-open': v:true,
+" \   },
+" \   'floating': {
+" \     'position': 'floating',
+" \     'open-action-strategy': 'sourceWindow',
+" \   },
+" \   'floatingTop': {
+" \     'position': 'floating',
+" \     'floating-position': 'center-top',
+" \     'open-action-strategy': 'sourceWindow',
+" \   },
+" \   'floatingLeftside': {
+" \     'position': 'floating',
+" \     'floating-position': 'left-center',
+" \     'floating-width': 50,
+" \     'open-action-strategy': 'sourceWindow',
+" \   },
+" \   'floatingRightside': {
+" \     'position': 'floating',
+" \     'floating-position': 'right-center',
+" \     'floating-width': 50,
+" \     'open-action-strategy': 'sourceWindow',
+" \   },
+" \   'simplify': {
+" \     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
+" \   }
+" \ }
+" Enable norminette-vim (and gcc)
+let g:syntastic_c_checkers = ['norminette']
+let g:syntastic_aggregate_errors = 1
+
+" Set the path to norminette (do no set if using norminette of 42 mac)
+let g:syntastic_c_norminette_exec = 'norminette'
+
+" Support headers (.h)
+let g:c_syntax_for_h = 1
+let g:syntastic_c_include_dirs = ['include', '../include', '../../include', 'libft', '../libft/include', '../../libft/include']
+
+" Pass custom arguments to norminette (this one ignores 42header)
+let g:syntastic_c_norminette_args = '-R CheckTopCommentHeader'
+
+" Check errors when opening a file (disable to speed up startup time)
+let g:syntastic_check_on_open = 1
+
+" Enable error list
+let g:syntastic_always_populate_loc_list = 1
+
+" Automatically open error list
+let g:syntastic_auto_loc_list = 0
+
+" Skip check when closing
+let g:syntastic_check_on_wq = 0
+
+function! NvimGdbNoTKeymaps()
+  tnoremap <silent> <buffer> <esc> <c-\><c-n>
+endfunction
+
+let g:nvimgdb_config_override = {
+  \ 'key_next': 'n',
+  \ 'key_step': 's',
+  \ 'key_finish': 'f',
+  \ 'key_continue': 'c',
+  \ 'key_until': 'u',
+  \ 'key_breakpoint': 'b',
+  \ 'set_tkeymaps': "NvimGdbNoTKeymaps",
+  \ }
+function ShowGDB(arg)
+	execute "GdbStart gdb -q " a:arg
+	:GdbCreateWatch info locals
+endfunction
+command! -nargs=* ShowGdb :call     ShowGDB(<f-args>)
