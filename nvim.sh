@@ -37,5 +37,4 @@ echo ""
 echo "Tadam!!! Fecha o terminal e volta abrir"
 echo "usa o nvim em vez do vim"
 echo "Aceito MbWay e dinheiro"
-echo "Made with HATE!!!"
 source ~/.zshrc
