@@ -1,7 +1,7 @@
-"Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
+" Run PlugInstall if there are missing plugins
+" autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+"   \| PlugInstall --sync | source $MYVIMRC
+" \| endif
 
 call plug#begin()
 "Search files
@@ -91,7 +91,7 @@ set signcolumn=yes
 set smartindent
 set ignorecase
 set hidden
-set mouse=a
+set mouse=
 set mousemodel=extend
 
 let mapleader = " "
@@ -463,8 +463,22 @@ let g:nvimgdb_config_override = {
   \ 'key_breakpoint': 'b',
   \ 'set_tkeymaps': "NvimGdbNoTKeymaps",
   \ }
-function ShowGDB(arg)
-	execute "GdbStart gdb -q " a:arg
-	:GdbCreateWatch info locals
+function! ShowGDB(compile = "y",...)
+	if a:compile == "y"
+		execute "!gcc -g *.c"
+		execute "GdbStart gdb -q ./a.out"
+		:GdbCreateWatch info locals
+	endif
+	if a:compile == "d"
+		let l:dir_counter = 1
+		let l:dirs = ""
+		while l:dir_counter <= a:0
+			let l:dirs .= a:{l:dir_counter} . " "
+			let l:dir_counter += 1
+		endwhile
+		execute "!gcc -g " l:dirs
+		execute "GdbStart gdb -q ./a.out"
+		:GdbCreateWatch info locals
+	endif
 endfunction
 command! -nargs=* ShowGdb :call     ShowGDB(<f-args>)
