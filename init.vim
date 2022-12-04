@@ -51,8 +51,10 @@ Plug 'nvim-lua/plenary.nvim'
 " Plug '907th/vim-auto-save'
 Plug 'pseewald/vim-anyfold'
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
-Plug 'justinmk/vim-sneak'
 
+"Moving
+Plug 'justinmk/vim-sneak'
+Plug 'unblevable/quick-scope'
 
 " Python
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
@@ -96,6 +98,13 @@ set foldlevel=99 " Open all folds
 
 "sneak conf
 let g:sneak#use_ic_scs = 1
+"Quickscope conf
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+augroup qs_colors
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#5ffffff' gui=underline ctermfg=81 cterm=underline
+augroup END
 
 augroup remember
   autocmd!
@@ -110,8 +119,6 @@ let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<F6>'
 let g:floaterm_width = 0.9
 let g:floaterm_height = 1.0
-
-nnoremap <silent> <leader>m :delmark!<CR>
 
 " nnoremap <silent> <C-z> :lua require("harpoon.ui").toggle_quick_menu()<Enter>
 " nnoremap <silent> <C-a> :lua require("harpoon.mark").add_file()<Enter>
