@@ -254,7 +254,6 @@ inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float
 vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
-
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
 nmap <silent> <C-s> <Plug>(coc-range-select)
@@ -390,6 +389,11 @@ function! ShowGDB(compile = "y",...)
 endfunction
 command! -nargs=* ShowGdb :call     ShowGDB(<f-args>)
 
+function! Save_all_exit()
+	execute "wa"
+	execute "qa"
+endfunction
+command! -nargs=* SE :call     Save_all_exit()
 " guard for distributions lacking the 'persistent_undo' feature.
 " set undolevels=300
 " if has('persistent_undo')
