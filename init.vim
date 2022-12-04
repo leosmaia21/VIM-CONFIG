@@ -51,8 +51,8 @@ Plug 'nvim-lua/plenary.nvim'
 " Plug '907th/vim-auto-save'
 Plug 'pseewald/vim-anyfold'
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
+Plug 'justinmk/vim-sneak'
 
-" Plug 'kshenoy/vim-signature'
 
 " Python
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
@@ -94,6 +94,8 @@ autocmd Filetype * AnyFoldActivate               " activate for all filetypes
 set foldlevel=0  " close all folds
 set foldlevel=99 " Open all folds
 
+"sneak conf
+let g:sneak#use_ic_scs = 1
 
 augroup remember
   autocmd!
