@@ -5,16 +5,16 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin()
 "Search files
-Plug 'preservim/NERDTree'
+" Plug 'preservim/NERDTree'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 "themes
 Plug 'tomasiser/vim-code-dark'
 Plug 'sainnhe/gruvbox-material'
 Plug 'morhetz/gruvbox'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'vim-airline/vim-airline-themes'
@@ -106,6 +106,7 @@ augroup qs_colors
   autocmd ColorScheme * highlight QuickScopeSecondary guifg='#5ffffff' gui=underline ctermfg=81 cterm=underline
 augroup END
 
+"To remember the cursor position 
 augroup remember
   autocmd!
   autocmd BufWinLeave *.* mkview
@@ -117,7 +118,7 @@ let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_prev   = '<F8>'
 let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<F6>'
-let g:floaterm_width = 0.9
+let g:floaterm_width  = 0.9
 let g:floaterm_height = 1.0
 
 " nnoremap <silent> <C-z> :lua require("harpoon.ui").toggle_quick_menu()<Enter>
@@ -130,8 +131,6 @@ noremap <C-w> <C-w>w
 noremap <C-l> :bnext<CR>
 noremap <C-h> :bprev<CR>
 nnoremap <leader><Tab> <C-6> 
-
-let g:auto_save = 0  " enable AutoSave on Vim startup
 
 let g:gruvbox_bold = 0 
 let g:gruvbox_material_better_performance = 1
@@ -275,9 +274,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
@@ -303,10 +299,10 @@ let g:coc_global_extensions = [
 			\'coc-clangd', 
 			\'coc-explorer', 
 			\'coc-json', 
-			\'coc-jedi',
 			\'coc-pairs',
 			\'coc-vimlsp',
-			\'coc-flutter'
+			\'coc-flutter',
+			\'coc-highlight'
 			\]
 
 let g:coc_user_config ={
@@ -391,7 +387,7 @@ function! ShowGDB(compile = "y",...)
 		endwhile
 		execute "!gcc -g " l:dirs
 		execute "GdbStart gdb -q ./a.out"
-		:GdbCreateWatch info locals
+		execute "GdbCreateWatch info locals"
 	endif
 endfunction
 command! -nargs=* ShowGdb :call     ShowGDB(<f-args>)
