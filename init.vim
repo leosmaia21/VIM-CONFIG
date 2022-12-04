@@ -1,7 +1,7 @@
 " Run PlugInstall if there are missing plugins
-" autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-"   \| PlugInstall --sync | source $MYVIMRC
-" \| endif
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
 
 call plug#begin()
 "Search files
@@ -68,12 +68,6 @@ let g:mail42 = 'ledos-sa@student.42.fr'
 
 let g:coc_default_semantic_highlight_groups = 1
 
-set clipboard+=unnamedplus
-
-nnoremap <C-y> "+y
-vnoremap <C-y> "+y
-nnoremap <C-p> "+gP
-vnoremap <C-p> "+gP
 filetype plugin indent on
 syntax on
 set rnu
@@ -95,14 +89,6 @@ set mouse=
 set mousemodel=extend
 
 let mapleader = " "
-
-" set viewdir=$HOME/.vim_view//
-" set foldmethod=syntax
-" set foldnestmax=10
-" set foldlevel=99
-" set nofoldenable
-" set foldclose=all
-" set foldopen=all
 
 " fold mas com o plugin
 filetype plugin indent on " required
@@ -143,11 +129,7 @@ noremap <C-h> :bprev<CR>
 nnoremap <leader><Tab> <C-6> 
 
 let g:auto_save = 0  " enable AutoSave on Vim startup
-" let g:lsc_auto_map = v:true
-"nnoremap <esc> :noh<return><esc>
-" if has('termguicolors')
-" 	set termguicolors
-" endif
+
 let g:gruvbox_bold = 0 
 let g:gruvbox_material_better_performance = 1
 colorscheme gruvbox
@@ -157,24 +139,10 @@ let g:airline_theme = 'gruvbox'
 
 "Open explorer, is like nerdtree but betther
 nmap <space>e <Cmd>CocCommand explorer <CR>
-" autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
-" CocAction('runCommand', 'explorer.getNodeInfo', 'closest') is v:null
-"
 
 " refresh do coc explorer sempre que é gravado um ficheiro para atualizar os
 " erros nos outros ficheiros
 autocmd BufWritePost * call CocAction('runCommand', 'explorer.doAction', 'closest', ['refresh'])
-" autocmd User CocDiagnosticChange,CocGitStatusChange
-"     \ call CocAction('runCommand', 'explorer.doAction', 'closest', ['refresh'])
-
-" Refresh nerdtree whenever is open
-" nnoremap <C-n> :call NERDTreeToggleAndRefresh()<CR>
-" function NERDTreeToggleAndRefresh()
-" :NERDTreeToggle
-" if g:NERDTree.IsOpen()
-" :NERDTreeRefreshRoot
-" endif
-" endfunction
 
 " Configuracao para aparecer a linha em insert mode e o bloco em normal mode
 let &t_SI = "\e[5 q"
@@ -195,16 +163,8 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" Using Lua functions
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-
-
 " A partir daqui agradecam ao COC porque é tudo copiado de lá, da configuração
 " padrao 
-
 
 " Some servers have issues with backup files, see #649.
 set nobackup
@@ -212,22 +172,10 @@ set nowritebackup
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=300
+set updatetime=100
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: There's always complete item selected by default, you may want to enable
-" no select by `"suggest.noselect": true` in your configuration file.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-" inoremap <silent><expr> <TAB>
-"       \ coc#pum#visible() ? coc#pum#next(1) :
-"       \ CheckBackspace() ? "\<Tab>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -391,39 +339,6 @@ let g:markdown_fenced_languages = [
       \ 'help'
       \]
 
-" let g:coc_explorer_global_presets = {
-" \   '.vim': {
-" \     'root-uri': '~/.vim',
-" \   },
-" \   'tab': {
-" \     'position': 'tab',
-" \     'quit-on-open': v:true,
-" \   },
-" \   'floating': {
-" \     'position': 'floating',
-" \     'open-action-strategy': 'sourceWindow',
-" \   },
-" \   'floatingTop': {
-" \     'position': 'floating',
-" \     'floating-position': 'center-top',
-" \     'open-action-strategy': 'sourceWindow',
-" \   },
-" \   'floatingLeftside': {
-" \     'position': 'floating',
-" \     'floating-position': 'left-center',
-" \     'floating-width': 50,
-" \     'open-action-strategy': 'sourceWindow',
-" \   },
-" \   'floatingRightside': {
-" \     'position': 'floating',
-" \     'floating-position': 'right-center',
-" \     'floating-width': 50,
-" \     'open-action-strategy': 'sourceWindow',
-" \   },
-" \   'simplify': {
-" \     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
-" \   }
-" \ }
 " Enable norminette-vim (and gcc)
 let g:syntastic_c_checkers = ['norminette']
 let g:syntastic_aggregate_errors = 1
@@ -482,3 +397,14 @@ function! ShowGDB(compile = "y",...)
 	endif
 endfunction
 command! -nargs=* ShowGdb :call     ShowGDB(<f-args>)
+
+" guard for distributions lacking the 'persistent_undo' feature.
+" set undolevels=300
+" if has('persistent_undo')
+"     let target_path = expand('~/.config/nvim/persistent_undo')
+"     if !isdirectory(target_path)
+"         call system('mkdir -p ' . target_path)
+"     endif
+"     let &undodir = target_path
+"     set undofile
+" endif
