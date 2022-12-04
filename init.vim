@@ -90,6 +90,8 @@ set mousemodel=extend
 
 let mapleader = " "
 
+let g:auto_save = 1  " enable AutoSave on Vim startup
+
 " fold mas com o plugin
 filetype plugin indent on " required
 syntax on                 " required
@@ -321,18 +323,21 @@ let g:coc_user_config ={
 	\'coc.preferences.colorSupport': v:true,
 	\'semanticTokens.enable': v:true,
 	\'coc.preferences.semanticTokensHighlights':v:true,
-	\'explorer.git.enable':v:true, 
-	\'explorer.buffer.root.template': '[icon & 1] OPEN EDITORS',
-	\'explorer.file.root.template': '[icon & 1] PROJECT ([root])',
-	\'explorer.file.child.template': '[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]',
-	\'explorer.file.showHiddenFiles': v:true,
-	\'explorer.file.reveal.auto': v:false,
+	\'explorer.git.enable': v:true, 
 	\'explorer.icon.enableNerdfont': v:true,
 	\'explorer.previewAction.onHover': v:false,
 	\'explorer.position': 'left',
 	\'coc.preferences.extensionUpdateCheck': 'daily',
 	\'flutter.provider.enableSnippet' : v:true,
 	\'flutter.enabled' : v:true,
+	\'explorer.buffer.root.template': '[icon & 1] OPEN EDITORS',
+	\'explorer.file.root.template': '[icon & 1] PROJECT ([root])',
+	\'explorer.file.child.template': '[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]',
+	\'explorer.file.showHiddenFiles': v:true,
+	\'explorer.file.reveal.auto': v:false,
+	\'explorer.keyMappings.global':{
+			\ "<cr>":["expandable?", ["expanded?", "collapse", "expand"], "open"]
+	  \ }
 	\}
 let g:markdown_fenced_languages = [
       \ 'vim',
@@ -368,6 +373,7 @@ let g:syntastic_check_on_wq = 0
 function! NvimGdbNoTKeymaps()
   tnoremap <silent> <buffer> <esc> <c-\><c-n>
 endfunction
+autocmd TermOpen * startinsert
 
 let g:nvimgdb_config_override = {
   \ 'key_next': 'n',
