@@ -48,7 +48,7 @@ Plug 'tpope/vim-fugitive'
 "Others
 Plug 'vim-airline/vim-airline'
 Plug 'nvim-lua/plenary.nvim'
-Plug '907th/vim-auto-save'
+" Plug '907th/vim-auto-save'
 Plug 'pseewald/vim-anyfold'
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 
@@ -60,13 +60,12 @@ Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 Plug '42Paris/42header'
 Plug 'vim-syntastic/syntastic'
 Plug 'alexandregv/norminette-vim'
+
  " Plug 'numirias/semshi'
 call plug#end()
 
 let g:user42 = 'ledos-sa'
 let g:mail42 = 'ledos-sa@student.42.fr'
-
-let g:coc_default_semantic_highlight_groups = 1
 
 filetype plugin indent on
 syntax on
@@ -90,11 +89,7 @@ set mousemodel=extend
 
 let mapleader = " "
 
-let g:auto_save = 1  " enable AutoSave on Vim startup
-
 " fold mas com o plugin
-filetype plugin indent on " required
-syntax on                 " required
 autocmd Filetype * AnyFoldActivate               " activate for all filetypes
 set foldlevel=0  " close all folds
 set foldlevel=99 " Open all folds
@@ -113,9 +108,6 @@ let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<F6>'
 let g:floaterm_width = 0.9
 let g:floaterm_height = 1.0
-let g:bufferline_show_bufnr = 0
-
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 
 nnoremap <silent> <leader>m :delmark!<CR>
 
@@ -171,13 +163,8 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
 set updatetime=100
-
 set signcolumn=yes
-
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -219,14 +206,11 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
-
 augroup mygroup
 autocmd!
 " Setup formatexpr specified filetype(s).
