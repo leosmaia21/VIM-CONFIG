@@ -85,9 +85,11 @@ set scrolloff=8
 set signcolumn=yes
 set smartindent
 set ignorecase
-set hidden
+" set hidden
+set nohidden
 set mouse=
 set mousemodel=extend
+set selectmode+=mouse
 
 let mapleader = " "
 
@@ -141,6 +143,7 @@ let g:airline_theme = 'gruvbox'
 
 "Open explorer, is like nerdtree but betther
 nmap <space>e <Cmd>CocCommand explorer <CR>
+autocmd BufEnter * if(winnr("$") == 1 && &filetype=='coc-explorer') | q | endif
 
 " refresh do coc explorer sempre que é gravado um ficheiro para atualizar os
 " erros nos outros ficheiros
@@ -324,7 +327,8 @@ let g:coc_user_config ={
 	\'explorer.file.showHiddenFiles': v:true,
 	\'explorer.file.reveal.auto': v:false,
 	\'explorer.keyMappings.global':{
-			\ "<cr>":["expandable?", ["expanded?", "collapse", "expand"], "open"]
+			\ "<cr>":["wait", "expandable?", ["expanded?", "collapse", "expand"], "open"],
+			\ "<BS>":["wait", "collapse"]
 	  \ }
 	\}
 let g:markdown_fenced_languages = [
