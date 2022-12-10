@@ -24,7 +24,7 @@ Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 
 "LSP and all the godies
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'romgrk/barbar.nvim'
 Plug 'sbdchd/neoformat'
 " Plug 'jiangmiao/auto-pairs'
@@ -63,8 +63,18 @@ Plug '42Paris/42header'
 Plug 'vim-syntastic/syntastic'
 Plug 'alexandregv/norminette-vim'
 
+Plug 'neovim/nvim-lspconfig'
  " Plug 'numirias/semshi'
 call plug#end()
+
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
 let g:user42 = 'ledos-sa'
 let g:mail42 = 'ledos-sa@student.42.fr'
@@ -85,8 +95,7 @@ set scrolloff=8
 set signcolumn=yes
 set smartindent
 set ignorecase
-" set hidden
-set nohidden
+set hidden
 set mouse=
 set mousemodel=extend
 set selectmode+=mouse
@@ -123,15 +132,16 @@ let g:floaterm_keymap_toggle = '<F6>'
 let g:floaterm_width  = 0.9
 let g:floaterm_height = 1.0
 
-" nnoremap <silent> <C-z> :lua require("harpoon.ui").toggle_quick_menu()<Enter>
-" nnoremap <silent> <C-a> :lua require("harpoon.mark").add_file()<Enter>
+nnoremap <silent> <leader>q :lua require("harpoon.ui").toggle_quick_menu()<Enter>
+nnoremap <silent> <leader>i :lua require("harpoon.mark").add_file()<Enter>
 
 noremap <Tab> >>
 noremap <S-Tab> << 
 noremap <C-w> <C-w>w
 
-noremap <C-l> :bnext<CR>
-noremap <C-h> :bprev<CR>
+nnoremap <silent>    <Right> <Cmd>BufferPrevious<CR>
+nnoremap <silent>    <Left> <Cmd>BufferNext<CR>
+nnoremap <silent>    <Down> <Cmd>BufferClose<CR>
 nnoremap <leader><Tab> <C-6> 
 
 let g:gruvbox_bold = 0 
@@ -152,8 +162,8 @@ autocmd BufWritePost * call CocAction('runCommand', 'explorer.doAction', 'closes
 " Configuracao para aparecer a linha em insert mode e o bloco em normal mode
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
-set ttimeout
-set ttimeoutlen=1
+" set ttimeout
+" set ttimeoutlen=1
 set ttyfast
 
 
@@ -238,7 +248,7 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+" nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Run the Code Lens action on the current line.
 nmap <leader>cl  <Plug>(coc-codelens-action)
@@ -299,7 +309,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 let g:coc_global_extensions = [
 			\'coc-json', 
-			\'coc-clangd', 
+			\'coc-clangd',
 			\'coc-explorer', 
 			\'coc-json', 
 			\'coc-pairs',
