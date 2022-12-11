@@ -51,7 +51,7 @@ Plug 'nvim-lua/plenary.nvim'
 " Plug '907th/vim-auto-save'
 Plug 'pseewald/vim-anyfold'
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
-
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "Moving
 Plug 'justinmk/vim-sneak'
 Plug 'unblevable/quick-scope'
@@ -60,10 +60,10 @@ Plug 'unblevable/quick-scope'
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 "42
 Plug '42Paris/42header'
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 Plug 'alexandregv/norminette-vim'
 
-" Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
  " Plug 'numirias/semshi'
 call plug#end()
 
@@ -71,7 +71,7 @@ let g:user42 = 'ledos-sa'
 let g:mail42 = 'ledos-sa@student.42.fr'
 
 filetype plugin indent on
-syntax on
+syntax enable
 set rnu
 set number
 set cursorline
@@ -116,9 +116,6 @@ augroup remember
 augroup END
 
 "Float terminal configs
-let g:floaterm_keymap_new    = '<F7>'
-let g:floaterm_keymap_prev   = '<F8>'
-let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<F6>'
 let g:floaterm_width  = 0.9
 let g:floaterm_height = 1.0
@@ -130,8 +127,8 @@ noremap <Tab> >>
 noremap <S-Tab> << 
 noremap <C-w> <C-w>w
 
-nnoremap <silent>    <Right> <Cmd>BufferPrevious<CR>
-nnoremap <silent>    <Left> <Cmd>BufferNext<CR>
+nnoremap <silent>    <Left> <Cmd>BufferPrevious<CR>
+nnoremap <silent>    <Right> <Cmd>BufferNext<CR>
 nnoremap <silent>    <Down> <Cmd>BufferClose<CR>
 nnoremap <leader><Tab> <C-6> 
 
@@ -156,12 +153,7 @@ let &t_EI = "\e[1 q"
 " set ttimeout
 " set ttimeoutlen=1
 set ttyfast
-
-
 set encoding=utf-8
-
-nnoremap <leader>t :below new output:///flutter-dev <CR>
-let g:dart_format_on_save = 1
 
 "telescope
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -236,34 +228,12 @@ augroup end
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 " nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Run the Code Lens action on the current line.
 nmap <leader>cl  <Plug>(coc-codelens-action)
 
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
 nmap <silent> <C-s> <Plug>(coc-range-select)
@@ -283,7 +253,6 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Mappings for CoCList
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>d  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
 " nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
@@ -302,20 +271,17 @@ let g:coc_global_extensions = [
 			\'coc-json', 
 			\'coc-clangd',
 			\'coc-explorer', 
-			\'coc-json', 
 			\'coc-pairs',
 			\'coc-vimlsp',
 			\'coc-flutter',
-			\'coc-highlight'
+			\'coc-pyright',
 			\]
-
 let g:coc_user_config ={
+	\'colors.enable': v:true,
 	\'diagnostic.virtualText': v:true,
 	\'diagnostic.virtualTextCurrentLineOnly': v:false,
-	\'coc.preferences.colorSupport': v:true,
-	\'semanticTokens.enable': v:true,
-	\'coc.preferences.semanticTokensHighlights':v:true,
 	\'explorer.git.enable': v:true, 
+	 \'semanticTokens.enable': v:true,
 	\'explorer.icon.enableNerdfont': v:true,
 	\'explorer.previewAction.onHover': v:false,
 	\'explorer.position': 'left',
@@ -327,41 +293,23 @@ let g:coc_user_config ={
 	\'explorer.file.child.template': '[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]',
 	\'explorer.file.showHiddenFiles': v:true,
 	\'explorer.file.reveal.auto': v:false,
+	\'explorer.width': 30,
 	\'explorer.keyMappings.global':{
 			\ "<cr>":["wait", "expandable?", ["expanded?", "collapse", "expand"], "open"],
 			\ "<BS>":["wait", "collapse"]
-	  \ }
+	  \ },
 	\}
-let g:markdown_fenced_languages = [
-      \ 'vim',
-      \ 'help'
-      \]
-
 " Enable norminette-vim (and gcc)
-let g:syntastic_c_checkers = ['norminette']
-let g:syntastic_aggregate_errors = 1
-
-" Set the path to norminette (do no set if using norminette of 42 mac)
-let g:syntastic_c_norminette_exec = 'norminette'
-
-" Support headers (.h)
-let g:c_syntax_for_h = 1
-let g:syntastic_c_include_dirs = ['include', '../include', '../../include', 'libft', '../libft/include', '../../libft/include']
-
-" Pass custom arguments to norminette (this one ignores 42header)
-let g:syntastic_c_norminette_args = '-R CheckTopCommentHeader'
-
-" Check errors when opening a file (disable to speed up startup time)
-let g:syntastic_check_on_open = 1
-
-" Enable error list
-let g:syntastic_always_populate_loc_list = 1
-
-" Automatically open error list
-let g:syntastic_auto_loc_list = 0
-
-" Skip check when closing
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_c_checkers = ['norminette']
+" let g:syntastic_aggregate_errors = 1
+" let g:syntastic_c_norminette_exec = 'norminette'
+" let g:c_syntax_for_h = 1
+" let g:syntastic_c_include_dirs = ['include', '../include', '../../include', 'libft', '../libft/include', '../../libft/include']
+" let g:syntastic_c_norminette_args = '-R CheckTopCommentHeader'
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_wq = 0
 
 function! NvimGdbNoTKeymaps()
   tnoremap <silent> <buffer> <esc> <c-\><c-n>
@@ -401,14 +349,14 @@ function! Save_all_exit()
 	execute "wa"
 	execute "qa"
 endfunction
-command! -nargs=* SE :call     Save_all_exit()
-" guard for distributions lacking the 'persistent_undo' feature.
-" set undolevels=300
-" if has('persistent_undo')
-"     let target_path = expand('~/.config/nvim/persistent_undo')
-"     if !isdirectory(target_path)
-"         call system('mkdir -p ' . target_path)
-"     endif
-"     let &undodir = target_path
-"     set undofile
-" endif
+nnoremap <leader>z :call     Save_all_exit()
+
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup{
+" 			highlight= {
+" 			enable =  true,
+" 			disable = {"lua"},
+"     		additional_vim_regex_highlighting = true,
+" 	}
+" }
+" EOF
