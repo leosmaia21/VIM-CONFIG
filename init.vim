@@ -5,46 +5,28 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin()
 "Search files
-" Plug 'preservim/NERDTree'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope.nvim'
-
 "themes
-Plug 'tomasiser/vim-code-dark'
-Plug 'sainnhe/gruvbox-material'
 Plug 'morhetz/gruvbox'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'vim-airline/vim-airline-themes'
-
 " Snippets
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
-
 "LSP and all the godies
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'romgrk/barbar.nvim'
-Plug 'sbdchd/neoformat'
-" Plug 'jiangmiao/auto-pairs'
-
 "Flutter
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
-
 "Embedded terminal
 Plug 'voldikss/vim-floaterm'
-
 "Comment
-Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-commentary'
-
 "Git
 Plug 'tpope/vim-fugitive'
-" Plug 'kdheepak/lazygit.nvim'  "Para isto funcionar é preciso instalar o
-"Lazygit no PC 
-
 "Others
 Plug 'vim-airline/vim-airline'
 Plug 'nvim-lua/plenary.nvim'
@@ -52,19 +34,13 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'pseewald/vim-anyfold'
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'machakann/vim-highlightedyank'
 "Moving
-Plug 'justinmk/vim-sneak'
 Plug 'unblevable/quick-scope'
-
-" Python
-Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 "42
 Plug '42Paris/42header'
 " Plug 'vim-syntastic/syntastic'
 Plug 'alexandregv/norminette-vim'
-
-Plug 'neovim/nvim-lspconfig'
- " Plug 'numirias/semshi'
 call plug#end()
 
 let g:user42 = 'ledos-sa'
@@ -75,9 +51,9 @@ syntax enable
 set rnu
 set number
 set cursorline
+set noexpandtab
 set tabstop=4
 set shiftwidth=4
-"set expandtab
 set cursorcolumn
 set nowrap
 set noswapfile
@@ -85,6 +61,7 @@ set incsearch
 set scrolloff=8
 set signcolumn=yes
 set smartindent
+set smarttab
 set ignorecase
 set hidden
 set mouse=
@@ -98,8 +75,6 @@ autocmd Filetype * AnyFoldActivate               " activate for all filetypes
 set foldlevel=0  " close all folds
 set foldlevel=99 " Open all folds
 
-"sneak conf
-let g:sneak#use_ic_scs = 1
 "Quickscope conf
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 augroup qs_colors
@@ -115,7 +90,6 @@ augroup remember
   autocmd BufWinEnter *.* silent! loadview
 augroup END
 
-"Float terminal configs
 let g:floaterm_keymap_toggle = '<F6>'
 let g:floaterm_width  = 0.9
 let g:floaterm_height = 1.0
@@ -127,19 +101,16 @@ noremap <Tab> >>
 noremap <S-Tab> << 
 noremap <C-w> <C-w>w
 
-nnoremap <silent>    <Left> <Cmd>BufferPrevious<CR>
-nnoremap <silent>    <Right> <Cmd>BufferNext<CR>
-nnoremap <silent>    <Down> <Cmd>BufferClose<CR>
+nnoremap <silent>    <A-h> <Cmd>BufferPrevious<CR>
+nnoremap <silent>    <A-l> <Cmd>BufferNext<CR>
+nnoremap <silent>    <A-q> <Cmd>BufferClose<CR>
 nnoremap <leader><Tab> <C-6> 
 
 let g:gruvbox_bold = 0 
 let g:gruvbox_material_better_performance = 1
 colorscheme gruvbox
-" colorscheme codedark  
 let g:airline_theme = 'gruvbox'
-"set clipboard=unnamedplus
 
-"Open explorer, is like nerdtree but betther
 nmap <space>e <Cmd>CocCommand explorer <CR>
 autocmd BufEnter * if(winnr("$") == 1 && &filetype=='coc-explorer') | q | endif
 
@@ -150,8 +121,6 @@ autocmd BufWritePost * call CocAction('runCommand', 'explorer.doAction', 'closes
 " Configuracao para aparecer a linha em insert mode e o bloco em normal mode
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
-" set ttimeout
-" set ttimeoutlen=1
 set ttyfast
 set encoding=utf-8
 
@@ -161,9 +130,6 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" A partir daqui agradecam ao COC porque é tudo copiado de lá, da configuração
-" padrao 
-
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
@@ -172,8 +138,7 @@ set signcolumn=yes
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-						  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm(): "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
 let col = col('.') - 1
@@ -187,7 +152,6 @@ inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
@@ -199,7 +163,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call ShowDocumentation()<CR>
-
 function! ShowDocumentation()
 if CocAction('hasProvider', 'hover')
 call CocActionAsync('doHover')
@@ -212,9 +175,6 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 augroup mygroup
 autocmd!
 " Setup formatexpr specified filetype(s).
@@ -223,28 +183,8 @@ autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
 autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Apply AutoFix to problem on the current line.
-" nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Run the Code Lens action on the current line.
-nmap <leader>cl  <Plug>(coc-codelens-action)
-
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-
-" Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocActionAsync('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
@@ -267,27 +207,17 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-let g:coc_global_extensions = [
-			\'coc-json', 
-			\'coc-clangd',
-			\'coc-explorer', 
-			\'coc-pairs',
-			\'coc-vimlsp',
-			\'coc-flutter',
-			\'coc-pyright',
-			\]
+let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-explorer', 'coc-pairs', 'coc-flutter']
 let g:coc_user_config ={
 	\'colors.enable': v:true,
 	\'diagnostic.virtualText': v:true,
 	\'diagnostic.virtualTextCurrentLineOnly': v:false,
 	\'explorer.git.enable': v:true, 
-	 \'semanticTokens.enable': v:true,
+	\'semanticTokens.enable': v:true,
 	\'explorer.icon.enableNerdfont': v:true,
 	\'explorer.previewAction.onHover': v:false,
 	\'explorer.position': 'left',
 	\'coc.preferences.extensionUpdateCheck': 'daily',
-	\'flutter.provider.enableSnippet' : v:true,
-	\'flutter.enabled' : v:true,
 	\'explorer.buffer.root.template': '[icon & 1] OPEN EDITORS',
 	\'explorer.file.root.template': '[icon & 1] PROJECT ([root])',
 	\'explorer.file.child.template': '[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]',
@@ -352,6 +282,8 @@ endfunction
 nnoremap <leader>z :call     Save_all_exit()
 
 " lua <<EOF
+" EOF
+
 " require'nvim-treesitter.configs'.setup{
 " 			highlight= {
 " 			enable =  true,
@@ -359,4 +291,3 @@ nnoremap <leader>z :call     Save_all_exit()
 "     		additional_vim_regex_highlighting = true,
 " 	}
 " }
-" EOF
