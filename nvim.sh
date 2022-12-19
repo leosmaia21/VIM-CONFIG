@@ -23,14 +23,14 @@ echo 'export PATH="$HOME/.nvimcoc/nvim/bin:$PATH"' >> ~/.zshrc
 wget -q --show-progress https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/3270.zip
 mkdir fonts
 unzip -qq 3270.zip -d fonts/
-cd ~/.config/nvim
-git clone https://github.com/leosmaia21/VIM-CONFIG.git
+
 mv fonts/ ~/.fonts/
 fc-cache -f
 
 rm *.zip
 rm *.tar.*
-
+cd ~/.config
+git clone https://github.com/leosmaia21/VIM-CONFIG.git nvim
 echo ""
 echo "Tadam!!! Fecha o terminal e volta abrir"
 echo "usa o nvim em vez do vim"
