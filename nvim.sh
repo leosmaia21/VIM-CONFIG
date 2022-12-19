@@ -1,3 +1,6 @@
+olaola
+
+
 cd ~
 mkdir .nvimcoc
 cd .nvimcoc
