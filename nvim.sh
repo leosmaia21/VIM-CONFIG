@@ -30,7 +30,7 @@ fc-cache -f
 rm *.zip
 rm *.tar.*
 cd ~/.config
-git clone https://github.com/leosmaia21/VIM-CONFIG.git nvim
+git clone git@github.com:leosmaia21/VIM-CONFIG.git nvim
 echo ""
 echo "Tadam!!! Fecha o terminal e volta abrir"
 echo "usa o nvim em vez do vim"
