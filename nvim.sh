@@ -1,5 +1,6 @@
 1
 2
+3
 cd ~
 mkdir .nvimcoc
 cd .nvimcoc
