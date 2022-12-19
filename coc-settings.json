@@ -1,3 +1,5 @@
 {
-	"python.pythonPath": "~/.config/nvim/file"
+	"inlayHint.enable": false,
+	"diagnostic.virtualText": true,
+	"diagnostic.virtualTextCurrentLineOnly": false
 }
