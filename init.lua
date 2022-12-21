@@ -119,5 +119,3 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     end,
 	group = gClose,
 })
-
-vim.api.nvim_create_autocmd("BufEnter", {command = "echo 'ola'"})
