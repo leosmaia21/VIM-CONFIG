@@ -28,12 +28,11 @@ require('packer').startup(function(use)
 	use 'tpope/vim-commentary'
 	use {'sakhnik/nvim-gdb', run = './install.sh'}
 	use 'voldikss/vim-floaterm'
-	use 'honza/vim-snippets'
-	use 'SirVer/ultisnips'
+	-- use 'honza/vim-snippets'
+	-- use 'SirVer/ultisnips'
 	use 'romgrk/barbar.nvim'
 	use 'nvim-tree/nvim-web-devicons'
 	use 'vim-airline/vim-airline'
-	-- use 'jiangmiao/auto-pairs'
 
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -71,17 +70,17 @@ vim.g.mapleader = " "
 vim.o.rnu = true
 vim.o.number = true
 -- vim.o.cursorline = true
+-- vim.o.cursorcolumn = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
--- vim.o.cursorcolumn = true
 vim.o.wrap = false
 vim.o.swapfile = false
 vim.o.backup = false
--- vim.o.hlsearch = false
+vim.o.hlsearch = false
 vim.o.incsearch = true
 vim.o.scrolloff = 8
 vim.o.smartindent = true
--- vim.o.smarttab = true
+vim.o.smarttab = true
 vim.o.ignorecase = true
 vim.o.hidden = true
 
@@ -100,3 +99,16 @@ require'nvim-treesitter.configs'.setup {
 require("nvim-tree").setup{
    diagnostics = {enable=true, show_on_dirs=true}
 }
+vim.api.nvim_create_autocmd("BufEnter", {
+  nested = true,
+  callback = function()
+    if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
+      vim.cmd "quit"
+    end
+  end
+})
+
+vim.cmd [[ 
+autocmd BufEnter * if bufname('#') =~ 'NvimTree_' && bufname('%') !~ 'NvimTree_' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>" | execute 'buffer'.buf | endif
+]]
