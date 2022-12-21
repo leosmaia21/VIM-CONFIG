@@ -99,16 +99,25 @@ require'nvim-treesitter.configs'.setup {
 require("nvim-tree").setup{
    diagnostics = {enable=true, show_on_dirs=true}
 }
+
+local gNvim = vim.api.nvim_create_augroup("CloseNvimTree", {clear = true})
 vim.api.nvim_create_autocmd("BufEnter", {
   nested = true,
   callback = function()
     if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
       vim.cmd "quit"
     end
-  end
+  end,
+  group = gNvim
 })
 
-vim.cmd [[ 
-autocmd BufEnter * if bufname('#') =~ 'NvimTree_' && bufname('%') !~ 'NvimTree_' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>" | execute 'buffer'.buf | endif
-]]
+local gClose = vim.api.nvim_create_augroup("SavePositionWhenLeaving", {clear = true})
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+    pattern = { "*" },
+    callback = function()
+        vim.api.nvim_exec('silent! normal! g`"zv', false)
+    end,
+	group = gClose,
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {command = "echo 'ola'"})
