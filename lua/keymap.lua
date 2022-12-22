@@ -28,6 +28,7 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<A-h>', '<Cmd>BufferPrevious<CR>', opts)
 vim.keymap.set('n', '<A-l>', '<Cmd>BufferNext<CR>', opts)
 
+vim.keymap.set('n', '<leader>i', ":call setline('.', getline('.') . '	#type: ignore')<CR>")
 
 vim.cmd[[
 function! NvimGdbNoTKeymaps()

@@ -49,6 +49,14 @@ require('packer').startup(function(use)
 		tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
 
+	use {
+		's1n7ax/nvim-terminal',
+		config = function()
+			vim.o.hidden = true
+			require('nvim-terminal').setup()
+		end,
+	}
+
 	use '42Paris/42header'
 	if packer_bootstrap then
 		require('packer').sync()
