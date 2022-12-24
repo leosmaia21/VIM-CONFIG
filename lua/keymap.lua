@@ -30,6 +30,18 @@ vim.keymap.set('n', '<A-l>', '<Cmd>BufferNext<CR>', opts)
 
 vim.keymap.set('n', '<leader>i', ":call setline('.', getline('.') . '	#type: ignore')<CR>")
 
+
+local width = vim.api.nvim_get_option("columns")
+width = tostring(math.max(math.ceil(width * 1 / 3), 30))
+width = "ToggleTerm direction=vertical size=" .. width
+local opts = {noremap = true}
+vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
+vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-W>w]])
+vim.api.nvim_create_user_command('Termv', width,{})
+vim.api.nvim_create_user_command('Termh', 'ToggleTerm direction=horizontal',{})
+vim.api.nvim_create_user_command('Termf', 'ToggleTerm direction=float',{})
+
+
 vim.cmd[[
 function! NvimGdbNoTKeymaps()
   tnoremap <silent> <buffer> <esc> <c-\><c-n>

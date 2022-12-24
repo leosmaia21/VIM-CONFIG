@@ -1,5 +1,4 @@
-local ensure_packer = function()
-  local fn = vim.fn
+local ensure_packer = function()  local fn = vim.fn
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
     fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
@@ -8,6 +7,8 @@ local ensure_packer = function()
   end
   return false
 end
+
+print("Frase do dia: nao aguentabas nao binhas!")
 
 local packer_bootstrap = ensure_packer()
 
@@ -27,7 +28,7 @@ require('packer').startup(function(use)
 
 	use 'tpope/vim-commentary'
 	use {'sakhnik/nvim-gdb', run = './install.sh'}
-	use 'voldikss/vim-floaterm'
+	-- use 'voldikss/vim-floaterm'
 	-- use 'honza/vim-snippets'
 	-- use 'SirVer/ultisnips'
 	use 'romgrk/barbar.nvim'
@@ -49,13 +50,11 @@ require('packer').startup(function(use)
 		tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
 
-	use {
-		's1n7ax/nvim-terminal',
-		config = function()
-			vim.o.hidden = true
-			require('nvim-terminal').setup()
-		end,
-	}
+	use 'voldikss/vim-floaterm'
+
+	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+		require("toggleterm").setup()
+	end}
 
 	use '42Paris/42header'
 	if packer_bootstrap then
@@ -96,12 +95,11 @@ require('coc_config')
 require('keymap')
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"vim", "lua", "c", "rust" },
+  ensure_installed = {"vim", "lua", "c", "python" },
   auto_install = true,
   highlight = {
 	  enable = true,
 	  additional_vim_regex_highlighting = true
-
   },
 }
 require("nvim-tree").setup{
@@ -109,22 +107,30 @@ require("nvim-tree").setup{
    view = { relativenumber = true}
 }
 
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = vim.api.nvim_create_augroup("NvimTreeClose", {clear = true}),
+  pattern = "NvimTree_*",
+  callback = function()
+    local layout = vim.api.nvim_call_function("winlayout", {})
+    if layout[1] == "leaf" and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree" and layout[3] == nil then vim.cmd("confirm quit") end
+  end
+})
 
--- vim.api.nvim_create_autocmd("BufEnter", {
---   group = vim.api.nvim_create_augroup("NvimTreeClose", {clear = true}),
---   pattern = "NvimTree_*",
---   callback = function()
---     local layout = vim.api.nvim_call_function("winlayout", {})
---     if layout[1] == "leaf" and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree" and layout[3] == nil then vim.cmd("confirm quit") end
---   end
--- })
-
-local gClose = vim.api.nvim_create_augroup("SavePositionWhenLeaving", {clear = true})
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     pattern = { "*" },
     callback = function()
-		print('teste')
         vim.api.nvim_exec('silent! normal! g`"zv', false)
     end,
-	-- group = gClose,
+	group = vim.api.nvim_create_augroup("SavePositionWhenLeaving", {clear = true})
 })
+
+require("toggleterm").setup{
+  open_mapping = '<C-t>',
+  hide_numbers = true,
+  start_in_insert = true,
+  insert_mappings = true, -- whether or not the open mapping applies in insert mode
+  terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+  persist_mode = false, -- if set to true (default) the previous terminal mode will be remembered
+  direction = 'horizontal',
+  close_on_exit = true,
+}
