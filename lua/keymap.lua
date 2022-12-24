@@ -42,38 +42,38 @@ vim.api.nvim_create_user_command('Termh', 'ToggleTerm direction=horizontal',{})
 vim.api.nvim_create_user_command('Termf', 'ToggleTerm direction=float',{})
 
 
-vim.cmd[[
-function! NvimGdbNoTKeymaps()
-  tnoremap <silent> <buffer> <esc> <c-\><c-n>
-endfunction
-autocmd TermOpen * startinsert
+-- vim.cmd[[
+-- function! NvimGdbNoTKeymaps()
+--   tnoremap <silent> <buffer> <esc> <c-\><c-n>
+-- endfunction
+-- autocmd TermOpen * startinsert
 
-let g:nvimgdb_config_override = {
-  \ 'key_next': 'n',
-  \ 'key_step': 's',
-  \ 'key_finish': 'f',
-  \ 'key_continue': 'c',
-  \ 'key_until': 'u',
-  \ 'key_breakpoint': 'b',
-  \ 'set_tkeymaps': "NvimGdbNoTKeymaps",
-  \ }
-function! ShowGDB(compile = "y",...)
-	if a:compile == "y"
-		execute "!gcc -g *.c"
-		execute "GdbStart gdb -q ./a.out"
-		:GdbCreateWatch info locals
-	endif
-	if a:compile == "d"
-		let l:dir_counter = 1
-		let l:dirs = ""
-		while l:dir_counter <= a:0
-			let l:dirs .= a:{l:dir_counter} . " "
-			let l:dir_counter += 1
-		endwhile
-		execute "!gcc -g " l:dirs
-		execute "GdbStart gdb -q ./a.out"
-		execute "GdbCreateWatch info locals"
-	endif
-endfunction
-command! -nargs=* ShowGdb :call     ShowGDB(<f-args>)
-]]
+-- let g:nvimgdb_config_override = {
+--   \ 'key_next': 'n',
+--   \ 'key_step': 's',
+--   \ 'key_finish': 'f',
+--   \ 'key_continue': 'c',
+--   \ 'key_until': 'u',
+--   \ 'key_breakpoint': 'b',
+--   \ 'set_tkeymaps': "NvimGdbNoTKeymaps",
+--   \ }
+-- function! ShowGDB(compile = "y",...)
+-- 	if a:compile == "y"
+-- 		execute "!gcc -g *.c"
+-- 		execute "GdbStart gdb -q ./a.out"
+-- 		:GdbCreateWatch info locals
+-- 	endif
+-- 	if a:compile == "d"
+-- 		let l:dir_counter = 1
+-- 		let l:dirs = ""
+-- 		while l:dir_counter <= a:0
+-- 			let l:dirs .= a:{l:dir_counter} . " "
+-- 			let l:dir_counter += 1
+-- 		endwhile
+-- 		execute "!gcc -g " l:dirs
+-- 		execute "GdbStart gdb -q ./a.out"
+-- 		execute "GdbCreateWatch info locals"
+-- 	endif
+-- endfunction
+-- command! -nargs=* ShowGdb :call     ShowGDB(<f-args>)
+-- ]]

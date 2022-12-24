@@ -68,6 +68,8 @@ vim.g.user42 = 'ledos-sa'
 vim.g.mail42 = 'ledos-sa@student.42.fr'
 
 vim.o.termguicolors = true
+vim.o.syntax = "ON"
+-- vim.o.filetype = "ON"
 vim.g.gruvbox_bold = 0 
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.cmd.colorscheme("gruvbox")
@@ -90,6 +92,7 @@ vim.o.smartindent = true
 vim.o.smarttab = true
 vim.o.ignorecase = true
 vim.o.hidden = true
+vim.o.undofile = true
 
 require('coc_config')
 require('keymap')
@@ -134,3 +137,43 @@ require("toggleterm").setup{
   direction = 'horizontal',
   close_on_exit = true,
 }
+
+-- Automatically source and re-compile packer whenever you save this init.lua
+vim.api.nvim_create_autocmd('BufWritePost', {
+  command = 'source <afile> | PackerCompile',
+  group = vim.api.nvim_create_augroup('Packer', { clear = true }),
+  pattern = vim.fn.expand '$MYVIMRC',
+})
+
+
+function file_exists(name)
+   local f=io.open(name,"r")
+   if f~=nil then io.close(f) return true else return false end
+end
+
+vim.api.nvim_create_user_command("Showgdb",
+function(opts)
+	if opts.args == "" then
+		vim.cmd("!rm -f debug_gdb")
+		vim.cmd("!gcc -g *.c -o debug_gdb")
+		if file_exists("debug_gdb") then
+			vim.cmd("GdbStart gdb -q ./debug_gdb")
+			vim.cmd("GdbCreateWatch info locals")
+		end
+	elseif opts.fargs[1] == "-b" then
+		if file_exists(opts.fargs[2]) then
+			vim.cmd("GdbStart gdb -q " .. opts.fargs[2])
+			vim.cmd("GdbCreateWatch info locals")
+		else
+			print("O ficheiro não existe!")
+		end
+	else
+		vim.cmd("!rm -f debug_gdb")
+		vim.cmd("!gcc -g -o debug_gdb " .. opts.args)
+		if file_exists("debug_gdb") then
+			vim.cmd("GdbStart gdb -q ./debug_gdb")
+			vim.cmd("GdbCreateWatch info locals")
+		end
+	end
+end,
+{nargs = "*", count = true})
