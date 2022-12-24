@@ -7,10 +7,9 @@ local ensure_packer = function()  local fn = vim.fn
   end
   return false
 end
+local packer_bootstrap = ensure_packer()
 
 print("Frase do dia: nao aguentabas nao binhas!")
-
-local packer_bootstrap = ensure_packer()
 
 require('packer').startup(function(use)
 	-- Package manager
@@ -18,23 +17,16 @@ require('packer').startup(function(use)
 	use {'neoclide/coc.nvim', branch = 'release'}
 	use 'morhetz/gruvbox'
 	use 'sainnhe/gruvbox-material'
+	use 'embark-theme/vim'
 	use 'rose-pine/neovim'
-
 	use 'ThePrimeagen/harpoon'
-	use {
-		'nvim-telescope/telescope.nvim',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
-
+	use 'nvim-telescope/telescope.nvim'
+	use 'nvim-lua/plenary.nvim'
 	use 'tpope/vim-commentary'
 	use {'sakhnik/nvim-gdb', run = './install.sh'}
-	-- use 'voldikss/vim-floaterm'
-	-- use 'honza/vim-snippets'
-	-- use 'SirVer/ultisnips'
 	use 'romgrk/barbar.nvim'
 	use 'nvim-tree/nvim-web-devicons'
 	use 'vim-airline/vim-airline'
-
     use {
         'nvim-treesitter/nvim-treesitter',
         run = function()
@@ -50,8 +42,6 @@ require('packer').startup(function(use)
 		tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
 
-	use 'voldikss/vim-floaterm'
-
 	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
 		require("toggleterm").setup()
 	end}
@@ -63,18 +53,16 @@ require('packer').startup(function(use)
 end)
 
 vim.cmd[[ let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-pairs'] ]]
-
 vim.g.user42 = 'ledos-sa'
 vim.g.mail42 = 'ledos-sa@student.42.fr'
 
+vim.g.mapleader = " "
+
 vim.o.termguicolors = true
-vim.o.syntax = "ON"
--- vim.o.filetype = "ON"
 vim.g.gruvbox_bold = 0 
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.cmd.colorscheme("gruvbox")
-
-vim.g.mapleader = " "
+-- vim.cmd.colorscheme("rose-pine")
 
 vim.o.rnu = true
 vim.o.number = true
@@ -131,9 +119,9 @@ require("toggleterm").setup{
   open_mapping = '<C-t>',
   hide_numbers = true,
   start_in_insert = true,
-  insert_mappings = true, -- whether or not the open mapping applies in insert mode
-  terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-  persist_mode = false, -- if set to true (default) the previous terminal mode will be remembered
+  insert_mappings = true,
+  terminal_mappings = true,
+  persist_mode = false,
   direction = 'horizontal',
   close_on_exit = true,
 }
@@ -145,10 +133,10 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = vim.fn.expand '$MYVIMRC',
 })
 
-
 function file_exists(name)
-   local f=io.open(name,"r")
-   if f~=nil then io.close(f) return true else return false end
+	if name == nil then return false end
+	local f=io.open(name,"r")
+	if f~=nil then io.close(f) return true else return false end
 end
 
 vim.api.nvim_create_user_command("Showgdb",
@@ -167,6 +155,14 @@ function(opts)
 		else
 			print("O ficheiro não existe!")
 		end
+	elseif opts.fargs[1] == "-mb" then
+		vim.cmd("!make")
+		if file_exists(opts.fargs[2]) then
+			vim.cmd("GdbStart gdb -q " .. opts.fargs[2])
+			vim.cmd("GdbCreateWatch info locals")
+		else
+			print("O ficheiro não existe!")
+		end
 	else
 		vim.cmd("!rm -f debug_gdb")
 		vim.cmd("!gcc -g -o debug_gdb " .. opts.args)
@@ -175,5 +171,4 @@ function(opts)
 			vim.cmd("GdbCreateWatch info locals")
 		end
 	end
-end,
-{nargs = "*", count = true})
+end, {nargs = "*", count = true})

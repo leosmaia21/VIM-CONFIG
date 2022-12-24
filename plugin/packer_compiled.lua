@@ -150,6 +150,11 @@ _G.packer_plugins = {
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
+  vim = {
+    loaded = true,
+    path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/vim",
+    url = "https://github.com/embark-theme/vim"
+  },
   ["vim-airline"] = {
     loaded = true,
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/vim-airline",
@@ -159,11 +164,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/vim-commentary",
     url = "https://github.com/tpope/vim-commentary"
-  },
-  ["vim-floaterm"] = {
-    loaded = true,
-    path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/vim-floaterm",
-    url = "https://github.com/voldikss/vim-floaterm"
   }
 }
 
