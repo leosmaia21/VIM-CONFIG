@@ -94,20 +94,10 @@ _G.packer_plugins = {
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/gruvbox",
     url = "https://github.com/morhetz/gruvbox"
   },
-  ["gruvbox-material"] = {
-    loaded = true,
-    path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/gruvbox-material",
-    url = "https://github.com/sainnhe/gruvbox-material"
-  },
   harpoon = {
     loaded = true,
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
-  },
-  neovim = {
-    loaded = true,
-    path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/neovim",
-    url = "https://github.com/rose-pine/neovim"
   },
   ["nvim-gdb"] = {
     loaded = true,
@@ -149,11 +139,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
-  },
-  vim = {
-    loaded = true,
-    path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/vim",
-    url = "https://github.com/embark-theme/vim"
   },
   ["vim-airline"] = {
     loaded = true,

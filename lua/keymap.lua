@@ -6,10 +6,8 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
-
-vim.g.floaterm_keymap_toggle = '<F6>'
-vim.g.floaterm_width  = 0.9
-vim.g.floaterm_height = 0.9
+vim.keymap.set('n', '<leader>a', ':lua require("harpoon.mark").add_file()<CR>', opts)
+vim.keymap.set('n', '<leader>h', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
 
 vim.keymap.set('n', '<C-w>', '<C-w>w')
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<cr>')
