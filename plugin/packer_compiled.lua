@@ -149,6 +149,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/vim-commentary",
     url = "https://github.com/tpope/vim-commentary"
+  },
+  ["vim-smoothie"] = {
+    loaded = true,
+    path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/vim-smoothie",
+    url = "https://github.com/psliwka/vim-smoothie"
   }
 }
 

@@ -20,18 +20,22 @@ require('packer').startup(function(use)
 	use {'sakhnik/nvim-gdb', run = './install.sh'}
 	use 'romgrk/barbar.nvim'
 	use 'vim-airline/vim-airline'
-    use {'nvim-treesitter/nvim-treesitter',
-        run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-            ts_update() end}
+	use 'psliwka/vim-smoothie'
+	use {'nvim-treesitter/nvim-treesitter',
+	run = function()
+		local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+		ts_update() end
+	}
 	use {'nvim-tree/nvim-tree.lua', requires = {
-		'nvim-tree/nvim-web-devicons'},tag = 'nightly'}
+		'nvim-tree/nvim-web-devicons'},tag = 'nightly'
+	}
 	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-		require("toggleterm").setup() end}
-		-- use 'preservim/tagbar'
-		use '42Paris/42header'
-		if is_bootstrap then
-			require('packer').sync()
+		require("toggleterm").setup() end
+	}
+	-- use 'preservim/tagbar'
+	use '42Paris/42header'
+	if is_bootstrap then
+		require('packer').sync()
 	end
 end)
 
@@ -44,7 +48,7 @@ if is_bootstrap then
   return
 end
 
-vim.cmd[[ let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-pairs'] ]]
+vim.cmd[[ let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-pairs', 'coc-pyright'] ]]
 vim.g.user42 = 'ledos-sa'
 vim.g.mail42 = 'ledos-sa@student.42.fr'
 
