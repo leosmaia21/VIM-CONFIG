@@ -36,6 +36,7 @@ require('packer').startup(function(use)
 	use {'nvim-tree/nvim-tree.lua', requires = {
 		'nvim-tree/nvim-web-devicons'},tag = 'nightly'}
 	use {'akinsho/toggleterm.nvim', tag = '*'}
+	use {"windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup {} end }
 	-- use 'preservim/tagbar'
 	use '42Paris/42header'
 	if is_bootstrap then
@@ -53,7 +54,7 @@ if is_bootstrap then
 end
 
 
-vim.cmd[[ let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-pairs', 'coc-pyright'] ]]
+vim.cmd[[ let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-pyright'] ]]
 vim.g.user42 = 'ledos-sa'
 vim.g.mail42 = 'ledos-sa@student.42.fr'
 
