@@ -14,6 +14,7 @@ require('packer').startup(function(use)
 	use {'neoclide/coc.nvim', branch = 'release'}
 	use 'morhetz/gruvbox'
 	use 'sainnhe/gruvbox-material'
+	use 'bluz71/vim-nightfly-colors'
 	use 'navarasu/onedark.nvim'
 	use 'ThePrimeagen/harpoon'
 	use 'nvim-telescope/telescope.nvim'
@@ -25,7 +26,8 @@ require('packer').startup(function(use)
 	use 'mfussenegger/nvim-dap-python'
 	use 'romgrk/barbar.nvim'
 	use 'vim-airline/vim-airline'
-	use 'psliwka/vim-smoothie'
+	-- use 'psliwka/vim-smoothie'
+	use 'karb94/neoscroll.nvim'
 	use {'nvim-treesitter/nvim-treesitter',
 	run = function()
 		local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
@@ -63,8 +65,8 @@ vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_material_better_performance = 1
 vim.g.gruvbox_material_background = 'hard'
 vim.o.background = 'dark'
-vim.cmd.colorscheme('gruvbox-material')
--- require('onedark').setup {
+vim.cmd.colorscheme('nightfly')
+-- require('onedark').setuptt
 --     style = 'darker'
 -- }
 -- require('onedark').load()
@@ -95,6 +97,8 @@ require('coc_config')
 require('keymap')
 require('debugger')
 
+
+require('neoscroll').setup()
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {"vim", "lua", "c", "python" },
