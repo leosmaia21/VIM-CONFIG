@@ -31,7 +31,7 @@ local opts = {silent = true, noremap = true, expr = true, replace_keycodes = fal
 keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 -- Use <c-j> to trigger snippets
--- keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
+keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
 -- -- Use <c-space> to trigger completion
 keyset("i", "<c-space>", "coc#refresh()", {silent = true, expr = true})
 
@@ -169,9 +169,7 @@ vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}"
 ---@diagnostic disable-next-line: redefined-local
 local opts = {silent = true, nowait = true}
 -- Show all diagnostics
-keyset("n", "<space>a", ":<C-u>CocList diagnostics<cr>", opts)
--- Manage extensions
-keyset("n", "<space>e", ":<C-u>CocList extensions<cr>", opts)
+keyset("n", "<space>m", ":<C-u>CocList diagnostics<cr>", opts)
 -- Show commands
 keyset("n", "<space>c", ":<C-u>CocList commands<cr>", opts)
 -- Find symbol of current document
