@@ -26,7 +26,6 @@ require('packer').startup(function(use)
 	use 'mfussenegger/nvim-dap-python'
 	use 'romgrk/barbar.nvim'
 	use 'vim-airline/vim-airline'
-	-- use 'psliwka/vim-smoothie'
 	use 'karb94/neoscroll.nvim'
 	use {'nvim-treesitter/nvim-treesitter',
 	run = function()
@@ -36,9 +35,8 @@ require('packer').startup(function(use)
 	use {'nvim-tree/nvim-tree.lua', requires = {
 		'nvim-tree/nvim-web-devicons'},tag = 'nightly'}
 	use {'akinsho/toggleterm.nvim', tag = '*'}
-	use "windwp/nvim-autopairs"
-		
-	-- use 'preservim/tagbar'
+	use 'windwp/nvim-autopairs'
+	use 'Pocco81/auto-save.nvim'
 	use '42Paris/42header'
 	if is_bootstrap then
 		require('packer').sync()

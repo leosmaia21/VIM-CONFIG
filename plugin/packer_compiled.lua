@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/42header",
     url = "https://github.com/42Paris/42header"
   },
+  ["auto-save.nvim"] = {
+    loaded = true,
+    path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/auto-save.nvim",
+    url = "https://github.com/Pocco81/auto-save.nvim"
+  },
   ["barbar.nvim"] = {
     loaded = true,
     path = "/home/leonardo/.local/share/nvim/site/pack/packer/start/barbar.nvim",
