@@ -36,7 +36,8 @@ require('packer').startup(function(use)
 	use {'nvim-tree/nvim-tree.lua', requires = {
 		'nvim-tree/nvim-web-devicons'},tag = 'nightly'}
 	use {'akinsho/toggleterm.nvim', tag = '*'}
-	use {"windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup {} end }
+	use "windwp/nvim-autopairs"
+		
 	-- use 'preservim/tagbar'
 	use '42Paris/42header'
 	if is_bootstrap then
@@ -99,6 +100,7 @@ require('keymap')
 require('debugger')
 
 
+require("nvim-autopairs").setup({map_cr = false})
 require('neoscroll').setup()
 
 require'nvim-treesitter.configs'.setup {
