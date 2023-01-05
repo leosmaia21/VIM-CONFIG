@@ -54,6 +54,7 @@ end
 
 
 vim.cmd[[ let g:coc_global_extensions = ['coc-json', 'coc-clangd', 'coc-pyright'] ]]
+-- vim.cmd[[ filetype plugin indent on ]]
 vim.g.user42 = 'ledos-sa'
 vim.g.mail42 = 'ledos-sa@student.42.fr'
 
